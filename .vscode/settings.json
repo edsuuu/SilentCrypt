@@ -1,0 +1,7 @@
+{
+  "code-runner.executorMap": {
+    "python": "python3"
+  },
+  "code-runner.runInTerminal": true
+}
+
