@@ -5,8 +5,7 @@ class SilentCrypt:
         self.start()
         
     def start(self):
-        Core().main()
-        print(1)        
+        Core()
 
 if __name__ == "__main__":
     SilentCrypt()

